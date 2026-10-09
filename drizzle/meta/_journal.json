@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1791068527025,
+      "tag": "0000_dashing_dazzler",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1791221740823,
+      "tag": "0001_natural_elektra",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1791493885551,
+      "tag": "0002_creator_access",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+services:
+  liftbasket:
+    build: .
+    ports:
+      - "127.0.0.1:3000:3000"
+    env_file: .env.local
+    environment:
+      DATABASE_PATH: /app/data/liftbasket.sqlite
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped

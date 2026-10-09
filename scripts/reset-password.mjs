@@ -1,0 +1,5 @@
+import {createInterface} from 'node:readline/promises';
+import {randomBytes,scryptSync} from 'node:crypto';
+import {DatabaseSync} from 'node:sqlite';
+const rl=createInterface({input:process.stdin,output:process.stdout});
+try{const email=(await rl.question('Account email to reset: ')).trim().toLowerCase();const db=new DatabaseSync(process.env.DATABASE_PATH||'data/liftbasket.sqlite');const account=db.prepare('SELECT id FROM accounts WHERE email=?').get(email);if(!account)throw new Error('No matching account.');const password=randomBytes(24).toString('base64url'),salt=randomBytes(16).toString('hex');db.prepare('UPDATE accounts SET password_hash=? WHERE id=?').run(salt+':'+scryptSync(password,salt,64).toString('hex'),account.id);db.exec('CREATE TABLE IF NOT EXISTS sessions(token_hash TEXT PRIMARY KEY,user_id TEXT NOT NULL,expires_at INTEGER NOT NULL)');db.prepare('DELETE FROM sessions WHERE user_id=?').run(account.id);db.close();console.log('New password (save it now): '+password);}finally{rl.close();}
